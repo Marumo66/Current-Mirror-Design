@@ -1,0 +1,2 @@
+* Illustrative Level-1 model; not a foundry PDK.
+.model NM NMOS(Level=1 VTO=0.7 KP=200u LAMBDA=0.02)
