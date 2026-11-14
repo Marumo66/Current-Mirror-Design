@@ -21,7 +21,7 @@ I ran the same circuit twice. The first run used LAMBDA = 0.02; the second used 
 - Current mismatch relative to the 100 µA reference
 - Output resistance from the DC sweep and the operating-point Gds value
 
-The measurements and calculations are in [experiment_notes.md](analysis/experiment_notes.md). The full write-up is in [phase_1_technical_report.md](report/phase_1_technical_report.md).
+The two LTspice files are in [schematics](schematics/). The measurements and calculations are in [experiment_notes.md](analysis/experiment_notes.md). The full write-up is in [phase_1_technical_report.md](report/phase_1_technical_report.md).
 
 ## Limitation
 
