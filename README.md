@@ -9,6 +9,10 @@ This repository contains the LTspice schematics and netlists, model cards, selec
 
 ## Phase 1 — Basic NMOS current mirror
 
+### Circuit
+
+![Basic NMOS current mirror schematic](Phase_1_Basic_Current_Mirror/results/figures/basic_nmos_current_mirror_schematic.svg)
+
 ### Setup
 
 | Parameter | Value |
