@@ -1,22 +1,28 @@
 # Basic NMOS Current Mirror — Experiment Notes
 
-## 1. Circuit and model
+## 1. Circuit
 
-The circuit uses two matched NMOS devices. M1 is diode-connected and establishes the common gate voltage. M2 uses the same gate voltage and provides the mirrored output current. The source and bulk terminals are at ground. An ideal 100 µA current source feeds the reference branch from a 1.8 V supply.
+The circuit has two matched NMOS transistors.
 
-The model is a simplified Level-1 NMOS model:
+- M1 is diode-connected: its drain and gate are tied together.
+- M2 uses the same gate voltage as M1.
+- Both sources and bulks are connected to ground.
+- A 100 µA ideal current source feeds the reference branch from a 1.8 V supply.
+- VSWEEP sets the voltage at the drain of M2.
+
+The model used for the first run was:
 
 ```spice
 .model NM NMOS(Level=1 VTO=0.7 KP=200u LAMBDA=0.02)
 ```
 
-The controlled comparison changes only `LAMBDA` from `0.02` to `0`.
+For the second run, only LAMBDA was changed from 0.02 to 0.
 
-## 2. DC sweep measurements
+## 2. DC sweep readings
 
-The CSV file contains selected cursor readings transcribed from LTspice. These are sampled points from the sweep, not the complete 181-point sweep dataset.
+The following values were read from the LTspice plot cursors. They are selected points from the sweep, not the full 181-point dataset.
 
-| VOUT (V) | IOUT, λ=0.02 (µA) | IOUT, λ=0 (µA) |
+| VOUT (V) | IOUT, LAMBDA = 0.02 (µA) | IOUT, LAMBDA = 0 (µA) |
 |---:|---:|---:|
 | 0.1 | 52.719635 | — |
 | 0.2 | 85.569722 | — |
@@ -25,17 +31,17 @@ The CSV file contains selected cursor readings transcribed from LTspice. These a
 | 1.0 | 99.974372 | 99.999997 |
 | 1.8 | 101.542600 | 100.000000 |
 
-The output current is read as `-I(VSWEEP)` because of LTspice's voltage-source current reference direction.
+I plotted `-I(VSWEEP)` as the output current. LTspice reports current through a voltage source using its own reference direction, so the minus sign gives the current delivered by the mirror to the output node.
 
 ## 3. Current mismatch
 
-The signed current mismatch is defined as:
+I calculated the signed mismatch relative to the 100 µA reference current using:
 
-[
-	ext{Mismatch}(%)=rac{I_{OUT}-I_{REF}}{I_{REF}}	imes100%.
-]
+```text
+Mismatch (%) = (IOUT - IREF) / IREF * 100
+```
 
-For `λ=0.02`, the measured mismatch is:
+For LAMBDA = 0.02:
 
 | VOUT (V) | Mismatch (%) |
 |---:|---:|
@@ -46,55 +52,72 @@ For `λ=0.02`, the measured mismatch is:
 | 1.0 | -0.025628 |
 | 1.8 | +1.542600 |
 
-For `λ=0`, the three sampled points at 0.5 V, 1.0 V, and 1.8 V are essentially 100 µA. This does not imply a constant current below the saturation region; at low output voltage M2 still enters the triode region.
+At low VOUT, M2 is not in saturation, so its current is well below the reference current. The 0.5 V, 1.0 V and 1.8 V points are in the saturation region for this setup.
 
-## 4. Channel-length modulation interpretation
+With LAMBDA = 0, the three sampled saturation-region currents are essentially 100 µA.
 
-For the simplified saturation-region model:
+## 4. Channel-length modulation
 
-[
-I_Dapproxrac{1}{2}K_Prac{W}{L}V_{OV}^{2}(1+lambda V_{DS}).
-]
+For the simplified Level-1 model, the saturation-region drain current can be written approximately as:
 
-With nonzero `λ`, current depends on `VDS`. Since M1 and M2 generally have different drain-source voltages, their drain currents do not match exactly. With `λ=0`, this particular model term is removed, so the saturation-region current becomes independent of `VDS` in the idealized model.
+```text
+ID = 0.5 * KP * (W/L) * VOV^2 * (1 + LAMBDA * VDS)
+```
 
-This is a model-controlled demonstration. Real devices have additional non-idealities not represented by this simple model.
+Here, VOV is the overdrive voltage (VGS - VTH).
+
+When LAMBDA is non-zero, ID changes with VDS. M1 and M2 have different drain-source voltages, so their currents do not match exactly. When I set LAMBDA to zero, this dependence is removed from the simplified model. The output current then stays close to 100 µA at the sampled saturation-region points.
+
+This comparison only shows the effect of this one model parameter. It does not include all non-ideal effects found in real MOSFETs.
 
 ## 5. Output resistance
 
-Using the `λ=0.02` sweep readings at 0.5 V and 1.8 V:
+I estimated the output conductance from the LAMBDA = 0.02 sweep using the readings at 0.5 V and 1.8 V:
 
-[
- g_{out}approxrac{101.542600-98.994235}{1.8-0.5}
- =1.96028,mu S
-]
+```text
+g_out = (101.542600 - 98.994235) µA / (1.8 - 0.5) V
+      = 1.96028 µS
 
-[
- r_{out}approxrac{1}{g_{out}}approx510.13,kOmega.
-]
+r_out = 1 / g_out
+      = approximately 510.13 kΩ
+```
 
-The LTspice operating-point log reported `Gds = 1.96 µS` for M2, corresponding to approximately 510.2 kΩ. The agreement is within the precision of the displayed values.
+The LTspice operating-point log showed Gds = 1.96 µS for M2. Its inverse is approximately 510.2 kΩ, which agrees with the estimate from the sweep to the precision displayed in the log.
 
-For `λ=0`, LTspice reported `Gds = 0.00e+00 S` to the displayed precision. In the idealized Level-1 model this implies unbounded small-signal output resistance in saturation. It must not be interpreted as infinite output resistance in a real MOSFET.
+For LAMBDA = 0, LTspice displayed Gds as 0.00e+00 S. In this idealized Level-1 model, that means the small-signal output resistance is unbounded in saturation. It should not be taken as the output resistance of a real transistor.
 
-## 6. Operating-point snapshot
+## 6. Operating-point readings
 
-### λ = 0.02
+The values below are transcribed from the LTspice device operating-point table. Some values are rounded by LTspice.
 
-LTspice displayed, to the precision shown in its log:
+### LAMBDA = 0.02
 
-- M1: `Id=1.00e-04 A`, `Vgs=1.01 V`, `Vds=1.01 V`, `Vdsat=0.313 V`, `gm=6.39e-04 S`, `gds=1.96e-06 S`.
-- M2: `Id=1.02e-04 A` (rounded display), `Vgs=1.01 V`, `Vds=1.80 V`, `Vdsat=0.313 V`, `gm=6.49e-04 S`, `gds=1.96e-06 S`.
+| Parameter | M1 | M2 |
+|---|---:|---:|
+| Id | 1.00e-04 A | 1.02e-04 A |
+| Vgs | 1.01 V | 1.01 V |
+| Vds | 1.01 V | 1.80 V |
+| Vbs | 0.00 V | 0.00 V |
+| Vth | 0.70 V | 0.70 V |
+| Vdsat | 0.313 V | 0.313 V |
+| Gm | 6.39e-04 S | 6.49e-04 S |
+| Gds | 1.96e-06 S | 1.96e-06 S |
 
-### λ = 0
+### LAMBDA = 0
 
-LTspice displayed:
+The node listing showed VREF = 1.01623 V.
 
-- `VREF=1.01623 V`.
-- M1 and M2: `Id=1.00e-04 A`, `Vgs=1.02 V`, `Vds=1.02 V` and `1.80 V`, respectively, `Vdsat=0.316 V`, `gm=6.32e-04 S`, and `gds=0.00e+00 S`.
+| Parameter | M1 | M2 |
+|---|---:|---:|
+| Id | 1.00e-04 A | 1.00e-04 A |
+| Vgs | 1.02 V | 1.02 V |
+| Vds | 1.02 V | 1.80 V |
+| Vbs | 0.00 V | 0.00 V |
+| Vth | 0.70 V | 0.70 V |
+| Vdsat | 0.316 V | 0.316 V |
+| Gm | 6.32e-04 S | 6.32e-04 S |
+| Gds | 0.00e+00 S | 0.00e+00 S |
 
-Values are transcribed from the visible LTspice output and retain its rounding.
+## 7. LTspice warning
 
-## 7. Simulator warnings and limitations
-
-LTspice reported that the selected MOSFET length and width were shorter/narrower than recommended for a Level-1 MOSFET. The simulations converged, but the warning and simplified model should be documented. These results are appropriate for learning the first-order behavior of the current mirror; they are not evidence of a foundry-qualified design.
+LTspice reported that the selected transistor length and width were shorter/narrower than recommended for a Level-1 MOSFET. The operating-point calculation and DC sweep converged, but this warning is a limitation of the setup. The model parameters are illustrative and are not taken from a foundry PDK.
