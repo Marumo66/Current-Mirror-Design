@@ -1,25 +1,39 @@
-# Phase 1 Technical Report — Basic NMOS Current Mirror
+# Phase 1 Report — Basic NMOS Current Mirror
 
-## Abstract
+## Aim
 
-A two-transistor NMOS current mirror was simulated in LTspice using an illustrative Level-1 MOSFET model. The study examined the effect of channel-length modulation on output-current variation, current mismatch, and output resistance. A controlled comparison was performed by changing only the model parameter `LAMBDA` from 0.02 V⁻¹ to 0.
+I wanted to see how well a simple NMOS current mirror copies a 100 µA reference current, and how the result changes when channel-length modulation is included in the MOSFET model.
 
-## Circuit and conditions
+## Circuit and simulation setup
 
-- Supply: 1.8 V
-- Reference current: 100 µA
-- M1 and M2: W = 10 µm, L = 1 µm
-- Model: `NMOS(Level=1, VTO=0.7 V, KP=200 µA/V²)`
-- Output-voltage sweep: 0 V to 1.8 V, 10 mV step
-- Analyses: DC operating point and DC sweep
+I used two matched NMOS transistors in LTspice. M1 was diode-connected, and its gate was connected to the gate of M2. Both sources and bulks were grounded.
 
-M1 is diode-connected. M1 and M2 share the same gate voltage. Both sources are grounded; the standard three-terminal NMOS symbol ties the body to the source for this study.
+| Parameter | Value |
+|---|---:|
+| Supply voltage | 1.8 V |
+| Reference current | 100 µA |
+| Width of M1 and M2 | 10 µm |
+| Length of M1 and M2 | 1 µm |
+| Model threshold voltage | 0.7 V |
+| KP | 200 µA/V² |
+| LAMBDA | 0.02 and 0 |
+| DC sweep | 0 to 1.8 V, step 0.01 V |
+
+I first ran the circuit with LAMBDA = 0.02. I then copied the circuit and changed only LAMBDA to zero.
+
+The model is a simple Level-1 model:
+
+```spice
+.model NM NMOS(Level=1 VTO=0.7 KP=200u LAMBDA=0.02)
+```
 
 ## Results
 
-### Output-current measurements
+### Output current
 
-| VOUT (V) | IOUT, λ=0.02 (µA) | IOUT, λ=0 (µA) |
+The table shows selected cursor readings from the LTspice sweep. It does not contain every simulation point.
+
+| VOUT (V) | IOUT, LAMBDA = 0.02 (µA) | IOUT, LAMBDA = 0 (µA) |
 |---:|---:|---:|
 | 0.1 | 52.719635 | — |
 | 0.2 | 85.569722 | — |
@@ -28,41 +42,49 @@ M1 is diode-connected. M1 and M2 share the same gate voltage. Both sources are g
 | 1.0 | 99.974372 | 99.999997 |
 | 1.8 | 101.542600 | 100.000000 |
 
-The values are selected LTspice cursor readings transcribed from the user's simulator screenshots. The CSV contains selected samples, not the complete sweep dataset.
+With LAMBDA = 0.02, the output current at 1.8 V was 101.5426 µA. Relative to the 100 µA reference, the mismatch was +1.5426%.
 
-### Current mismatch
+With LAMBDA = 0, the three measured saturation-region points were essentially 100 µA.
 
-Mismatch is defined as `(IOUT - IREF) / IREF × 100%`. With λ=0.02, the mismatch at 1.8 V is +1.5426%. With λ=0, the sampled current remains 100 µA to the displayed precision at 0.5 V, 1.0 V, and 1.8 V.
+At low output voltage, the output transistor is not in saturation, so the output current is lower. This is visible in the readings at 0.1 V and 0.2 V.
 
-### Operating point
+### Channel-length modulation
 
-For λ=0.02, the LTspice device operating-point table showed M1 `Gds=1.96 µS` and M2 `Gds=1.96 µS` to the displayed precision. M2 had `VDS=1.80 V`, `VDSAT=0.313 V`, `gm=0.649 mS`, and a rounded drain current of `1.02e-04 A`.
+In the simplified Level-1 saturation model, the drain current is approximately:
 
-For λ=0, the table showed M1 and M2 drain currents of `1.00e-04 A`, `gm=0.632 mS`, and `Gds=0.00e+00 S` to the displayed precision. The operating-point listing gave `VREF=1.01623 V`.
+```text
+ID = 0.5 * KP * (W/L) * VOV^2 * (1 + LAMBDA * VDS)
+```
+
+When LAMBDA is 0.02, the current depends on VDS. M1 and M2 do not have the same VDS, so the output current is not exactly equal to the reference current.
+
+When LAMBDA is set to zero, this term disappears from the model. In the saturation region, the output current stays close to 100 µA in the measured points.
 
 ### Output resistance
 
-Using the λ=0.02 DC sweep samples at 0.5 V and 1.8 V:
+I estimated the output conductance using two points from the LAMBDA = 0.02 sweep:
 
-`gout ≈ (101.542600 − 98.994235) µA / 1.3 V = 1.96028 µS`
+```text
+g_out = (101.542600 - 98.994235) µA / (1.8 - 0.5) V
+      = 1.96028 µS
 
-`rout ≈ 1 / gout = 510.13 kΩ`
+r_out = 1 / g_out
+      = approximately 510.13 kΩ
+```
 
-This agrees with `1/Gds ≈ 510.2 kΩ` from the operating-point table to the precision of the displayed measurements.
+The LTspice operating-point log showed Gds = 1.96 µS for M2. This corresponds to about 510.2 kΩ and agrees with the estimate from the sweep.
 
-## Discussion
-
-With λ=0.02, the saturation-region current depends on `VDS` in the Level-1 model. Because M1 and M2 have different drain-source voltages, their currents do not match exactly. With λ=0, the model's channel-length-modulation term is removed; the sampled saturation-region current becomes effectively independent of output voltage, and the reported `Gds` is zero to the displayed precision.
-
-At low VOUT, M2 is not yet in saturation. The output current therefore rises with VOUT even when λ=0. This is why the comparison must distinguish the low-voltage region from the saturation region.
+For LAMBDA = 0, LTspice displayed Gds as zero to the shown precision. This is the result of the idealized model setting, not a claim that a real MOSFET has infinite output resistance.
 
 ## Limitations
 
-- The Level-1 model is intentionally simple and is not a foundry PDK.
-- LTspice reported that the selected W/L dimensions were shorter/narrower than recommended for a Level-1 MOSFET. The simulation converged, but the warning must be retained as a limitation.
-- The `λ=0` case is an idealized controlled experiment, not a claim that real MOSFETs have infinite output resistance.
-- Cursor points and log values are recorded at the precision visible in LTspice. Raw log screenshots containing local usernames and file paths are not included.
+- The Level-1 MOSFET model uses illustrative parameters and is not a foundry PDK.
+- LTspice warned that the selected W and L dimensions were outside its recommended range for this model.
+- The current readings are selected points copied from LTspice cursor screenshots, not the full sweep dataset.
+- The operating-point values are rounded to the precision shown by LTspice.
 
 ## Conclusion
 
-The controlled simulation demonstrates the first-order impact of channel-length modulation on a basic NMOS current mirror. With nonzero λ, output current varies with output voltage and the estimated output resistance is approximately 510 kΩ. With λ set to zero, the idealized model produces nearly constant saturation-region current and reports zero output conductance to the displayed precision. This establishes a baseline for the next phase: a cascode current mirror, which will be evaluated under the same model and bias conditions.
+The simulation showed the expected first-order effect of channel-length modulation. With LAMBDA = 0.02, the output current changed with output voltage and the estimated output resistance was about 510 kΩ. With LAMBDA = 0, the output current was almost constant in the measured saturation-region points.
+
+This basic circuit will be the reference for the next part of the project, where I will build and test a cascode current mirror.
