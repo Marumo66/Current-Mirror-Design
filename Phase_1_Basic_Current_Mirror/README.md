@@ -1,29 +1,28 @@
 # Phase 1 — Basic NMOS Current Mirror
 
-This phase establishes a two-transistor NMOS current mirror as the baseline circuit for later architecture comparisons.
+I started with a two-transistor NMOS current mirror and simulated it in LTspice.
 
-## Circuit conditions
+## Circuit settings
 
-- Supply voltage: 1.8 V
-- Reference current: 100 µA
-- M1 and M2: W = 10 µm, L = 1 µm
-- Output-voltage sweep: 0 V to 1.8 V, 10 mV step
-- Model: illustrative Level-1 NMOS
+| Parameter | Value |
+|---|---:|
+| Supply voltage | 1.8 V |
+| Reference current | 100 µA |
+| M1 and M2 | W = 10 µm, L = 1 µm |
+| Output-voltage sweep | 0–1.8 V, 0.01 V step |
+| MOSFET model | Level 1 |
 
-Two controlled model cases were simulated:
-- `LAMBDA=0.02`
-- `LAMBDA=0`
+I ran the same circuit twice. The first run used LAMBDA = 0.02; the second used LAMBDA = 0.
 
-## Work completed
+## What I checked
 
-1. DC operating-point analysis.
-2. DC output-voltage sweep.
-3. Comparison of output-current characteristics.
-4. Current-mismatch calculation.
-5. Output-resistance estimation from the sweep and operating-point data.
+- DC operating point of M1 and M2
+- Output current as VOUT was swept
+- Current mismatch relative to the 100 µA reference
+- Output resistance from the DC sweep and the operating-point Gds value
 
-See `analysis/experiment_notes.md` and `report/phase_1_technical_report.md` for details.
+The measurements and calculations are in [experiment_notes.md](analysis/experiment_notes.md). The full write-up is in [phase_1_technical_report.md](report/phase_1_technical_report.md).
 
-## Important limitation
+## Limitation
 
-LTspice issued recommended-dimension warnings for the chosen Level-1 MOSFET geometry. These simulations are intended to illustrate first-order behavior, not to represent a foundry-qualified design.
+The Level-1 model is only used here to study the basic effect of channel-length modulation. It is not a foundry model. LTspice also showed dimension warnings for the selected W and L values.
