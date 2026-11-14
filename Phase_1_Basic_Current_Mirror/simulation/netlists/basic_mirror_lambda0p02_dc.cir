@@ -1,0 +1,9 @@
+* Basic NMOS current mirror - DC sweep, lambda = 0.02
+V1 VDD 0 DC 1.8
+IREF VDD VREF DC 100u
+M1 VREF VREF 0 0 NM W=10u L=1u
+M2 VOUT VREF 0 0 NM W=10u L=1u
+VSWEEP VOUT 0 DC 0
+.model NM NMOS(Level=1 VTO=0.7 KP=200u LAMBDA=0.02)
+.dc VSWEEP 0 1.8 0.01
+.end
