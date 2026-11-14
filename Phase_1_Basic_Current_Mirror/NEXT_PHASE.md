@@ -1,15 +1,13 @@
-# Next phase — Cascode Current Mirror
+# Next: Cascode Current Mirror
 
-The next phase will extend the baseline study to a four-transistor cascode current mirror.
+The basic two-transistor current mirror is the reference circuit for the next phase.
 
-The comparison will use the same illustrative model and nominal reference current where practical.
+I will build a four-transistor cascode current mirror and compare it with the basic circuit. I plan to measure:
 
-Planned measurements:
-- Output-current versus output-voltage characteristic
+- Output current over the same output-voltage range
 - Current mismatch
 - Output resistance
-- Minimum output voltage / voltage headroom
-- Device operating points
-- Trade-off between output resistance and compliance voltage
+- Minimum output voltage needed for proper operation
+- DC operating points of the transistors
 
-The cascode circuit has not yet been designed or simulated. No performance claims are made at this stage.
+The cascode circuit has not been built or simulated yet. Results will be added after the circuit has been checked in LTspice.
