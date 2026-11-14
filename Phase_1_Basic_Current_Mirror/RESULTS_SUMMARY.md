@@ -1,10 +1,14 @@
-# Phase 1 Results Summary
+# Phase 1 — Results at a glance
 
-- Reference current: 100 µA.
-- With `λ=0.02`, `IOUT(1.8 V)=101.542600 µA`; signed mismatch = +1.542600%.
-- With `λ=0`, sampled saturation-region current is approximately 100 µA at 0.5 V, 1.0 V, and 1.8 V.
-- Finite-difference output resistance with `λ=0.02`: approximately 510.13 kΩ.
-- Operating-point `Gds` for `λ=0.02`: 1.96 µS, corresponding to approximately 510.2 kΩ.
-- Operating-point `Gds` for `λ=0`: 0.00 S to the displayed precision in this idealized Level-1 model.
+The reference current was 100 µA.
 
-Interpretation: enabling channel-length modulation gives finite output conductance and output-voltage-dependent current in saturation. Setting `λ=0` removes this dependence from the simplified model, but does not represent a real MOSFET with all physical effects included.
+| Measurement | LAMBDA = 0.02 | LAMBDA = 0 |
+|---|---:|---:|
+| IOUT at 0.5 V | 98.994235 µA | 99.999997 µA |
+| IOUT at 1.0 V | 99.974372 µA | 99.999997 µA |
+| IOUT at 1.8 V | 101.542600 µA | 100.000000 µA |
+| M2 Gds from operating-point log | 1.96 µS | 0.00 S (displayed precision) |
+
+For LAMBDA = 0.02, the output resistance estimated from the 0.5 V and 1.8 V sweep points is about 510.13 kΩ.
+
+The values are selected LTspice readings. See [experiment_notes.md](analysis/experiment_notes.md) for the full set of readings and calculations.
