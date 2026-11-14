@@ -1,0 +1,9 @@
+parameter,M1,M2,unit,display_precision_note
+Id,1.00e-04,1.02e-04,A,M2 value rounded in LTspice log
+Vgs,1.01,1.01,V,rounded in LTspice log
+Vds,1.01,1.80,V,rounded in LTspice log
+Vbs,0.00,0.00,V,
+Vth,0.70,0.70,V,
+Vdsat,0.313,0.313,V,
+Gm,6.39e-04,6.49e-04,S,
+Gds,1.96e-06,1.96e-06,S,
