@@ -1,0 +1,10 @@
+parameter,M1,M2,unit,display_precision_note
+Vref,1.01623,,V,from operating-point listing
+Id,1.00e-04,1.00e-04,A,
+Vgs,1.02,1.02,V,rounded in LTspice log
+Vds,1.02,1.80,V,rounded in LTspice log
+Vbs,0.00,0.00,V,
+Vth,0.70,0.70,V,
+Vdsat,0.316,0.316,V,
+Gm,6.32e-04,6.32e-04,S,
+Gds,0.00e+00,0.00e+00,S,reported as zero to displayed precision
