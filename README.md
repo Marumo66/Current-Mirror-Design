@@ -5,7 +5,7 @@ I built a basic NMOS current mirror in LTspice and used it to look at two questi
 - How does the output current change when I sweep the output voltage?
 - What changes when channel-length modulation is enabled or disabled in the MOSFET model?
 
-This repository contains the circuit netlists, model cards, selected simulation readings, calculations and a short report.
+This repository contains the LTspice schematics and netlists, model cards, selected simulation readings, calculations and a short report.
 
 ## Phase 1 — Basic NMOS current mirror
 
@@ -38,6 +38,7 @@ These are selected cursor readings from the LTspice plots, not the full sweep da
 
 ## Files
 
+- `Phase_1_Basic_Current_Mirror/schematics/` — the two LTspice `.asc` files used for the DC sweeps.
 - `Phase_1_Basic_Current_Mirror/models/` — the two Level-1 model cards.
 - `Phase_1_Basic_Current_Mirror/simulation/netlists/` — netlists for the operating-point and DC-sweep runs.
 - `Phase_1_Basic_Current_Mirror/results/data/` — cursor readings and operating-point values copied from LTspice.
@@ -45,7 +46,7 @@ These are selected cursor readings from the LTspice plots, not the full sweep da
 - `Phase_1_Basic_Current_Mirror/analysis/` — calculations and notes.
 - `Phase_1_Basic_Current_Mirror/report/` — the Phase 1 report.
 
-The final `.asc` files from my LTspice session are not in the repository yet. The netlists are included so the circuit and simulations can still be followed.
+The two `.asc` files in `Phase_1_Basic_Current_Mirror/schematics/` are the versions saved from the LTspice session. Each one runs a DC sweep with its own LAMBDA setting. The separate `.cir` files also include the operating-point runs.
 
 ## Notes and limitations
 
