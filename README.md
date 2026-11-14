@@ -25,14 +25,19 @@ Two model settings were compared:
 
 The sampled cursor readings and operating-point values are recorded in `Phase_1_Basic_Current_Mirror/results/data/`. These are selected readings transcribed from LTspice screenshots, not the complete sweep dataset.
 
+### Selected LTspice cursor readings
+
+![Current mirror comparison](Phase_1_Basic_Current_Mirror/results/figures/current_mirror_cursor_comparison.svg)
+
 ## Repository layout
 
 - `Phase_1_Basic_Current_Mirror/models/` — illustrative Level-1 model cards.
 - `Phase_1_Basic_Current_Mirror/simulation/netlists/` — operating-point and DC-sweep netlists for both lambda settings.
 - `Phase_1_Basic_Current_Mirror/results/data/` — recorded cursor readings and operating-point data.
+- `Phase_1_Basic_Current_Mirror/results/figures/` — comparison plot from selected cursor readings.
 - `Phase_1_Basic_Current_Mirror/analysis/` — calculations and interpretation.
 - `Phase_1_Basic_Current_Mirror/report/` — technical report.
-- `scripts/` — script to regenerate the plot from the recorded CSV.
+- `scripts/` — script to regenerate the PNG plot from the recorded CSV.
 
 Native `.asc` schematics are not included in this initial upload because the final working files from the local LTspice session have not yet been added. The netlists provide the reproducible circuit description for now.
 
