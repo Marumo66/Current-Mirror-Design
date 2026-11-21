@@ -1,13 +1,11 @@
-# Next: Cascode Current Mirror
+# Next: Compliance-voltage and operating-point checks
 
-The basic two-transistor current mirror is the reference circuit for the next phase.
+Phase 2 has been added in [Phase_2_130nm_Current_Mirror_Comparison](../Phase_2_130nm_Current_Mirror_Comparison/README.md). It compares the basic mirror with a self-biased cascode mirror using a generic 130-nm BSIM3 model.
 
-I will build a four-transistor cascode current mirror and compare it with the basic circuit. I plan to measure:
+The next checks are:
 
-- Output current over the same output-voltage range
-- Current mismatch
-- Output resistance
-- Minimum output voltage needed for proper operation
-- DC operating points of the transistors
+- Find the minimum output voltage at which the output current remains within 1% of the 100 µA reference.
+- Compare transistor operating points at the same output voltage.
+- Estimate small-signal output resistance from the operating-point gds value.
 
-The cascode circuit has not been built or simulated yet. Results will be added after the circuit has been checked in LTspice.
+These checks have not been completed yet.

@@ -1,0 +1,7 @@
+Metric,Basic,Cascode,Unit,Method
+Current variation (0.5-1.5 V),7.033617293,0.9602008501,%,(Imax-Imin)/IREF
+Maximum absolute current error (0.5-1.5 V),7.461441075,0.9218445281,%,max(abs(Imin-IREF),abs(Imax-IREF))/IREF
+Interval output resistance (0.5-1.5 V),142174.3547,1041448.7759,ohm,1 V/(IOUT@1.5V-IOUT@0.5V)
+Interval output resistance ratio,,,x,Cascode estimate / Basic estimate = 7.325152
+Current variation reduction,,,%,1-Cascode variation/Basic variation = 86.348406
+Output resistance increase,,,%,(Cascode estimate/Basic estimate-1)*100 = 632.515212

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="410" viewBox="0 0 720 410" role="img" aria-labelledby="title desc">
+  <title id="title">Selected output-current measurements</title>
+  <desc id="desc">Three measured output-current points for a basic and a cascode current mirror at output voltages of 0.5, 1.0 and 1.5 volts. Points are shown without interpolation.</desc>
+  <rect width="720" height="410" fill="white"/>
+  <text x="360" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#222">Selected DC measurement points</text>
+  <text x="360" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#555">Generic 130-nm BSIM3 model · VDD = 1.5 V · IREF = 100 µA</text>
+  <g stroke="#ddd" stroke-width="1">
+    <line x1="92" y1="82" x2="650" y2="82"/><line x1="92" y1="132" x2="650" y2="132"/>
+    <line x1="92" y1="182" x2="650" y2="182"/><line x1="92" y1="232" x2="650" y2="232"/>
+    <line x1="92" y1="282" x2="650" y2="282"/><line x1="92" y1="332" x2="650" y2="332"/>
+  </g>
+  <line x1="92" y1="282" x2="650" y2="282" stroke="#777" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <g stroke="#333" stroke-width="1.5" fill="none"><path d="M92 78 V332 H650"/></g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#444" text-anchor="end">
+    <text x="80" y="336">98</text><text x="80" y="286">100</text><text x="80" y="236">102</text>
+    <text x="80" y="186">104</text><text x="80" y="136">106</text><text x="80" y="86">108</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#444" text-anchor="middle">
+    <text x="180" y="353">0.5</text><text x="410" y="353">1.0</text><text x="640" y="353">1.5</text>
+    <text x="370" y="382">Output voltage (V)</text>
+  </g>
+  <text x="22" y="210" transform="rotate(-90 22 210)" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#444">Output current (µA)</text>
+  <g fill="#286090" stroke="#1b4668" stroke-width="1.5">
+    <circle cx="180" cy="271" r="6"/><circle cx="410" cy="177" r="6"/><circle cx="640" cy="96" r="6"/>
+  </g>
+  <g fill="#d17a22" stroke="#895016" stroke-width="1.5">
+    <rect x="174" y="299" width="12" height="12"/><rect x="404" y="276" width="12" height="12"/><rect x="634" y="275" width="12" height="12"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="11" fill="#333">
+    <text x="180" y="257" text-anchor="middle">100.428</text><text x="410" y="163" text-anchor="middle">104.217</text><text x="640" y="82" text-anchor="middle">107.461</text>
+    <text x="180" y="325" text-anchor="middle">99.078</text><text x="410" y="304" text-anchor="middle">100.000</text><text x="640" y="303" text-anchor="middle">100.038</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#333">
+    <circle cx="260" cy="395" r="5" fill="#286090"/><text x="272" y="399">Basic mirror</text>
+    <rect x="385" y="390" width="10" height="10" fill="#d17a22"/><text x="402" y="399">Cascode mirror</text>
+    <line x1="525" y1="395" x2="550" y2="395" stroke="#777" stroke-dasharray="5 4"/><text x="556" y="399">100 µA reference</text>
+  </g>
+</svg>

@@ -66,3 +66,12 @@ python3 scripts/plot_results.py
 ```
 
 The script plots the saved cursor readings. It does not run LTspice or recreate the full sweep.
+
+
+## Phase 2 — 130-nm current mirror comparison
+
+I then used a generic 130-nm BSIM3 model to compare a basic NMOS current mirror with a four-transistor self-biased cascode version. Both circuits use a 1.5 V supply and a 100 µA reference current.
+
+Over the 0.5–1.5 V measurement interval, the cascode circuit reduced the measured output-current variation from 7.03% to 0.96%. The interval output-resistance estimate changed from 142.17 kΩ to 1.041 MΩ. These resistance values are estimated from the DC sweep endpoints, not from a small-signal operating-point measurement.
+
+The Phase 2 schematics, measurement logs, calculations and model notes are in [Phase_2_130nm_Current_Mirror_Comparison](Phase_2_130nm_Current_Mirror_Comparison/README.md). The generic model file is not included because its redistribution terms have not been confirmed.
