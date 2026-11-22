@@ -28,6 +28,8 @@ I built this NMOS common-source stage with a PMOS active load in LTspice. I chec
 
 The slew-rate values are average slopes measured between two output-voltage cursor points during the transitions. They are not the peak value of the numerical derivative trace.
 
+The three ASC files are separate analysis setups based on the supplied final schematic. They were not re-run after packaging; the recorded values come from the LTspice output logs and cursor readings documented in `results/data/measurement_notes.md`.
+
 ## Files
 
 - `schematics/common_source_op_130nm.asc` — DC operating-point setup.
@@ -35,7 +37,7 @@ The slew-rate values are average slopes measured between two output-voltage curs
 - `schematics/common_source_transient_130nm.asc` — pulse-response setup used for the slew-rate measurements.
 - `results/data/measurements.csv` — summary of the recorded values.
 - `results/data/measurement_notes.md` — measurement points, calculations and limitations.
-- `screenshots/README.md` — screenshot notes. Real LTspice captures will be added separately.
+- `screenshots/README.md` — note about screenshots.
 - `models/README.md` — notes about the external model file.
 - `simulation/README.md` — how to run the three analyses.
 

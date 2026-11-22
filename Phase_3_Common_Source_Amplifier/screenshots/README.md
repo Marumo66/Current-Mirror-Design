@@ -1,5 +1,5 @@
 # Screenshots
 
-No generated circuit drawings or plots are used in this project. The screenshots for this phase will be added from the user's actual LTspice captures after the final screenshot set is confirmed.
+No generated circuit drawings or plots are used in this project. The recorded measurements are documented in `results/data/measurement_notes.md`.
 
-The recorded measurements are documented in `results/data/measurement_notes.md`.
+A clean full-schematic capture is not included yet. It can be added when the complete schematic is captured with the component values visible.
