@@ -4,6 +4,10 @@ I built this NMOS common-source stage with a PMOS active load in LTspice. I chec
 
 ## Circuit
 
+![Common-source amplifier schematic](screenshots/common_source_amplifier_schematic.png)
+
+*LTspice capture. The blue analysis directives are commented out; the active transient command is `.tran 0 2.5u 0 20p`.*
+
 - M1: NMOS, W = 10 µm, L = 1 µm
 - M2: PMOS, W = 10 µm, L = 1 µm
 - VDD = 1.5 V

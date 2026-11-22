@@ -1,5 +1,5 @@
 # Screenshots
 
-No generated circuit drawings or plots are used in this project. The recorded measurements are documented in `results/data/measurement_notes.md`.
+`common_source_amplifier_schematic.png` is a screenshot captured directly from LTspice. No generated circuit drawing is used.
 
-A clean full-schematic capture is not included yet. It can be added when the complete schematic is captured with the component values visible.
+The blue `.op`, `.ac` and older `.tran` directives in the screenshot are commented out. The active transient command is `.tran 0 2.5u 0 20p`. The separate ASC files in `../schematics/` are used for the DC, AC and transient runs.
