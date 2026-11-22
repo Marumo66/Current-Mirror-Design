@@ -75,3 +75,10 @@ I then used a generic 130-nm BSIM3 model to compare a basic NMOS current mirror 
 Over the 0.5–1.5 V measurement interval, the cascode circuit reduced the measured output-current variation from 7.03% to 0.96%. The interval output-resistance estimate changed from 142.17 kΩ to 1.041 MΩ. These resistance values are estimated from the DC sweep endpoints, not from a small-signal operating-point measurement.
 
 The Phase 2 schematics, measurement logs, calculations and model notes are in [Phase_2_130nm_Current_Mirror_Comparison](Phase_2_130nm_Current_Mirror_Comparison/README.md). The generic model file is not included because its redistribution terms have not been confirmed.
+
+
+## Phase 3 — Common-source amplifier
+
+I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The recorded results include a 32.22 dB gain at 10 kHz, a 9.33 MHz −3 dB bandwidth, a near-0 dB point at about 144.54 MHz, and cursor-based rising/falling slew-rate measurements.
+
+The schematics, measurements and model notes are in [Phase 3 — Common-Source Amplifier](Phase_3_Common_Source_Amplifier/README.md). The model file itself is not included because its redistribution terms have not been confirmed.
