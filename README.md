@@ -8,6 +8,11 @@ I built a basic NMOS current mirror in LTspice and used it to look at two questi
 This repository contains the LTspice schematics and netlists, model cards, selected simulation readings, calculations and a short report.
 
 ## Phase 1 — Basic NMOS current mirror
+### Phase 1 source schematics
+
+- [Current mirror with LAMBDA = 0 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda0.asc)
+- [Current mirror with LAMBDA = 0.02 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda002.asc)
+
 
 ### Circuit
 
@@ -69,6 +74,13 @@ The script plots the saved cursor readings. It does not run LTspice or recreate 
 
 
 ## Phase 2 — 130-nm current mirror comparison
+### Phase 2 source schematics
+
+- [Basic 130-nm current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/basic_current_mirror_130nm.asc)
+- [Cascode 130-nm current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/cascode_current_mirror_130nm.asc)
+
+The Phase 2 schematics reference the external `cmos130.lib` model. It is not included in this public repository because redistribution permission has not been confirmed. See the Phase 2 model notes for details.
+
 
 I then used a generic 130-nm BSIM3 model to compare a basic NMOS current mirror with a four-transistor self-biased cascode version. Both circuits use a 1.5 V supply and a 100 µA reference current.
 

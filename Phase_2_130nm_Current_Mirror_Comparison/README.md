@@ -4,6 +4,13 @@ This phase compares a basic NMOS current mirror with a self-biased cascode curre
 
 Both circuits use the same generic 130-nm BSIM3 model, 1.5 V supply, 100 µA reference current and 10 µm / 1 µm MOSFET dimensions. The output voltage is swept from 0 V to 1.5 V in 5 mV steps. The measurements below cover 0.5 V to 1.5 V.
 
+## LTspice source files
+
+- [Basic current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/basic_current_mirror_130nm.asc)
+- [Self-biased cascode current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/cascode_current_mirror_130nm.asc)
+
+Both schematics include `../models/cmos130.lib`. To run them, obtain the same generic 130-nm BSIM3 model separately and place it in `Phase_2_130nm_Current_Mirror_Comparison/models/`. The model is not included here because redistribution permission has not been confirmed.
+
 ## Files
 
 - schematics/basic_current_mirror_130nm.asc — basic two-transistor current mirror.

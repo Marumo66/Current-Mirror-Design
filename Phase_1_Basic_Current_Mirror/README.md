@@ -2,6 +2,13 @@
 
 I started with a two-transistor NMOS current mirror and simulated it in LTspice.
 
+## LTspice source files
+
+- [LAMBDA = 0 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda0.asc)
+- [LAMBDA = 0.02 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda002.asc)
+
+Both schematics contain their own Level-1 model directive, so no separate model file is needed for these two basic runs.
+
 ## Circuit settings
 
 | Parameter | Value |
