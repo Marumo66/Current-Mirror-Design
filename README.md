@@ -78,6 +78,26 @@ The Phase 2 schematics, measurement logs, calculations and model notes are in [P
 
 
 ## Phase 3 — Common-source amplifier
+### Phase 3 source files
+
+The LTspice source files are available individually:
+
+- [DC operating-point schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_op_130nm.asc)
+- [AC analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_ac_130nm.asc)
+- [Transient analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_transient_130nm.asc)
+
+To run them in LTspice, download or clone the repository and keep its folder structure. The schematics look for the model at `Phase_3_Common_Source_Amplifier/models/cmos130.lib` (relative to the `schematics/` folder). The model card is not included in this public repository because permission to redistribute it has not been confirmed.
+
+The model copy checked during preparation has SHA-256:
+
+`ac9aa8376dd3fb9cf7033e8791b9f76ae07bf2c809d2148e1a1662e5bb07b1c3`
+
+On macOS, verify a separately obtained copy with:
+
+```bash
+shasum -a 256 Phase_3_Common_Source_Amplifier/models/cmos130.lib
+```
+
 
 I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The recorded results include a 32.22 dB gain at 10 kHz, a 9.33 MHz −3 dB bandwidth, a near-0 dB point at about 144.54 MHz, and cursor-based rising/falling slew-rate measurements.
 

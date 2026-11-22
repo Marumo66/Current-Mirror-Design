@@ -34,6 +34,14 @@ The slew-rate values are average slopes measured between two output-voltage curs
 
 The three ASC files are separate analysis setups based on the supplied final schematic. They were not re-run after packaging; the recorded values come from the LTspice output logs and cursor readings documented in `results/data/measurement_notes.md`.
 
+## Source files
+
+- [DC operating-point schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_op_130nm.asc)
+- [AC analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_ac_130nm.asc)
+- [Transient analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_transient_130nm.asc)
+
+To run a schematic, keep the repository folder structure and place the separately obtained `cmos130.lib` file in `models/`. The ASC files reference it using `../models/cmos130.lib`. The model itself is not included because redistribution permission has not been confirmed.
+
 ## Files
 
 - `schematics/common_source_op_130nm.asc` — DC operating-point setup.
