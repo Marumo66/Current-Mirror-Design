@@ -32,6 +32,26 @@ The bandwidth estimate is based on a cursor reading at 4.4668359 MHz and 27.3243
 
 The slew rates are average slopes measured between cursor points over the 20–80% and 80–20% portions of the output transition. They are not peak values of the numerical derivative.
 
+## Simulation screenshots
+
+### DC operating point
+
+![DC operating-point results](screenshots/phase3_dc_operating_point.png)
+
+*LTspice operating-point log showing the output voltage and device currents.*
+
+### AC response
+
+![AC frequency response](screenshots/phase3_ac_response.png)
+
+*Gain and phase response across the simulated frequency range.*
+
+### Transient response
+
+![Transient response](screenshots/phase3_transient_response.png)
+
+*Input pulse and corresponding inverted output waveform.*
+
 ## Source files
 
 - [DC operating-point schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_op_130nm.asc)
