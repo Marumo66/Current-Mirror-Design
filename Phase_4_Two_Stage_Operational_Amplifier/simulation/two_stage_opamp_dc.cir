@@ -1,0 +1,29 @@
+* Phase 4 - Two-stage CMOS operational amplifier
+* Closed-loop DC operating-point check; CC=1 pF, RZ=10.5 kOhm.
+.include ../models/cmos130.lib
+.temp 27
+.options logopinfo
+
+VDD     N001      0         1.5
+VINP    N003      0         0.45
+VTAIL   N005      0         0.31
+VBN2    N004      0         0.292
+
+* First stage: NMOS differential pair and PMOS current-mirror load
+M1      n1        out       tail      0         Nmosfet W=10u L=1u
+M2      n2        N003      tail      0         Nmosfet W=10u L=1u
+M3      n1        n1        N001      N001      Pmosfet W=10u L=1u
+M4      n2        n1        N001      N001      Pmosfet W=10u L=1u
+M5      tail      N005      0         0         Nmosfet W=10u L=1u
+
+* Second stage: PMOS common-source device and NMOS current-sink load
+M6      out       n2        N001      N001      Pmosfet W=10u L=1u
+M7      out       N004      0         0         Nmosfet W=10u L=1u
+
+RZ      n2        n002      10.5k
+CC      n002      out       1p
+CL      out       0         1p
+
+.op
+.save V(n1) V(n2) V(out) V(tail) I(VDD)
+.end

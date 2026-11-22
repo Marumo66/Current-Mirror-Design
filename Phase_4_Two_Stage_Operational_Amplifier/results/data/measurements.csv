@@ -1,0 +1,17 @@
+metric,value,unit,conditions_or_method
+VDD,1.5,V,DC supply voltage
+CL,1,pF,Output load capacitor
+CC,1,pF,Miller compensation capacitor
+RZ,10.5,kOhm,Series compensation resistor
+DC_GAIN,79.578034,dB,AC return-ratio magnitude at 1 Hz; trace -V(out)/V(nfb)
+UGBW,13.543947,MHz,Near-0 dB return-ratio point; cursor magnitude +0.060451523 dB
+PHASE_MARGIN,46.08553,deg,180 deg plus phase -133.91447 deg at near-unity-gain point
+VOUT_DC,0.449782,V,Closed-loop DC operating point; VINP=0.45 V
+IDD,18.2271,uA,Absolute current drawn from VDD at DC operating point
+P_STATIC_CORE,27.34065,uW,1.5 V * 18.2271 uA; ideal bias-source power excluded
+SR_RISE_200MV,8.42631,V_per_us,20-80% average output slope; 200 mV input step
+SR_RISE_300MV,9.94791,V_per_us,20-80% average output slope; 300 mV input step
+SR_RISE_400MV,10.548,V_per_us,20-80% average output slope; 400 mV input step
+SR_RISE_500MV,10.8436,V_per_us,20-80% average output slope; 500 mV input step; not yet proven to be the asymptotic limit
+SR_FALL_200MV,4.10908,V_per_us,80-20% average output slope; 200 mV input step
+SR_FALL_500MV,3.9267,V_per_us,80-20% average output slope; 500 mV input step

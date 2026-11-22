@@ -114,3 +114,9 @@ shasum -a 256 Phase_3_Common_Source_Amplifier/models/cmos130.lib
 I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The current measurements are 30.37 dB gain at 10 kHz, an approximate 4.47 MHz −3 dB bandwidth, a near-unity-gain point at 144.54 MHz, and cursor-based rising/falling slew rates of 69.89 V/µs and 104.85 V/µs.
 
 The schematics, measurements and model notes are in [Phase 3 — Common-Source Amplifier](Phase_3_Common_Source_Amplifier/README.md). The model file itself is not included because its redistribution terms have not been confirmed.
+
+## Phase 4 — Two-stage CMOS operational amplifier
+
+Phase 4 adds a two-stage CMOS op-amp with a Miller compensation network. The current candidate uses a 1.5 V supply, 1 pF load, 1 pF compensation capacitor and 10.5 kΩ series compensation resistor. The measured results and LTspice source files are in [Phase 4 — Two-Stage CMOS Operational Amplifier](Phase_4_Two_Stage_Operational_Amplifier/README.md).
+
+The current cursor-based measurements are approximately 79.58 dB low-frequency return-ratio gain, 13.54 MHz unity-gain bandwidth and 46.09° phase margin. The 500 mV-step average output slopes are 10.84 V/µs rising and 3.93 V/µs falling. The measured VDD-only quiescent core power is 27.34 µW; ideal bias-source power is not included. These results use a generic BSIM3 model and are documented with their measurement conditions and limitations in the Phase 4 folder.
