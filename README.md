@@ -111,6 +111,6 @@ shasum -a 256 Phase_3_Common_Source_Amplifier/models/cmos130.lib
 ```
 
 
-I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The recorded results include a 32.22 dB gain at 10 kHz, a 9.33 MHz −3 dB bandwidth, a near-0 dB point at about 144.54 MHz, and cursor-based rising/falling slew-rate measurements.
+I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The current measurements are 30.37 dB gain at 10 kHz, an approximate 4.47 MHz −3 dB bandwidth, a near-unity-gain point at 144.54 MHz, and cursor-based rising/falling slew rates of 69.89 V/µs and 104.85 V/µs.
 
 The schematics, measurements and model notes are in [Phase 3 — Common-Source Amplifier](Phase_3_Common_Source_Amplifier/README.md). The model file itself is not included because its redistribution terms have not been confirmed.

@@ -1,6 +1,6 @@
 # Measurement notes
 
-Values below were read from the LTspice 26.0.2 screenshots and output log supplied with the project.
+The values below were read from the LTspice operating-point log and cursor windows during the Phase 3 re-check on 22 November 2026.
 
 ## DC operating point
 
@@ -17,20 +17,38 @@ Values below were read from the LTspice 26.0.2 screenshots and output log suppli
 
 - VIN DC offset = 0.45 V; AC amplitude = 1
 - Sweep: 1 Hz to 1 GHz, 100 points/decade
-- Gain at 10 kHz = 32.21699 dB
-- Cursor at 9.332543 MHz read 29.216764 dB. This is about 3 dB below the 10 kHz gain (the cursor difference was 3.0002259 dB).
-- Unity-gain cursor = 144.54398 MHz at +0.096279842 dB (96.279842 mdB), i.e. close to 0 dB.
-- The complex transfer-function plot `V(vout)/V(n003)` was used to show magnitude and phase. No phase-margin result is claimed.
+- Gain at 1 Hz = 30.373602 dB
+- Gain at 10 kHz = 30.37358 dB
+- Cursor reference near the low-frequency plateau: 31.622777 kHz, 30.37339 dB
+- Cursor near the −3 dB point: 4.4668359 MHz, 27.32431 dB
+- The two cursor readings differ by 3.0490705 dB. The −3 dB bandwidth is therefore reported as an approximate cursor estimate of 4.47 MHz, not as an interpolated exact crossing.
+- Near-unity-gain cursor = 144.54398 MHz at +0.096279842 dB (96.279842 mdB). This is close to 0 dB, but not an exact zero crossing.
+- The plotted signal was V(vout); the input source AC magnitude was 1. No phase-margin result is claimed.
 
 ## Transient and slew rate
 
 - VIN = `PULSE(0.35 0.55 1u 1n 1n 1u 2u)`
 - Transient command = `.tran 0 2.5u 0 20p`
 - Load capacitor = 1 pF
-- Output falling: cursor 1 at 1.00256 µs / 1.1683505 V; cursor 2 at 1.01034 µs / 0.35220888 V. Delta t = 7.78 ns; delta V = −816.32158 mV; average falling slope magnitude = 104.926 V/µs.
-- Output rising: cursor 1 at 2.00512 µs / 0.35169488 V; cursor 2 at 2.01682 µs / 1.1681467 V. Delta t = 11.7 ns; delta V = +816.45185 mV; average rising slope = 69.7822 V/µs.
-- These are cursor-based average slopes over the selected transition interval, approximately 20–80% of the measured output swing. They are not the instantaneous peak of `d(V(vout))`.
+
+### Output falling transition
+
+- Cursor 1 = 1.0025891 µs / 1.165109 V
+- Cursor 2 = 1.01036 µs / 0.35033801 V
+- Delta t = 7.7708818 ns
+- Delta V = −814.77098 mV
+- Average falling slope magnitude = 104.849 V/µs
+
+### Output rising transition
+
+- Cursor 1 = 2.0051032 µs / 0.35047021 V
+- Cursor 2 = 2.016668 µs / 1.1596267 V
+- Delta t = 11.576811 ns
+- Delta V = +809.15652 mV
+- Average rising slope = 69.8946 V/µs
+
+The cursor points are approximately at the 20% and 80% levels of the observed output swing. These are average slopes over the selected intervals, not the instantaneous peak of `d(V(vout))`.
 
 ## Model warnings
 
-LTspice reported that it supports BSIM3 version 3.3.0 while the model specifies 3.200. It also reported PD = 0 and PS = 0 warnings. The model was not modified.
+LTspice reported that it supports BSIM3 version 3.3.0 while the model specifies 3.200. It also reported PD = 0 and PS = 0 warnings. The model was not modified. It is a generic model, not a foundry-qualified PDK.

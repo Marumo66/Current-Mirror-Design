@@ -1,9 +1,9 @@
 metric,value,unit,conditions_or_method
 VOUT_DC,1.03752,V,operating point; VIN DC=0.45 V; VBP=0.8 V
-IDD,93.3611,uA,quiescent current drawn from 1.5 V supply (magnitude)
+IDD,93.3611,uA,quiescent current drawn from 1.5 V supply; magnitude
 P_STATIC,140.04165,uW,1.5 V * 93.3611 uA
-GAIN_10KHZ,32.21699,dB,AC cursor at 10 kHz
-BW_MINUS3DB,9.332543,MHz,AC cursor near 3 dB below low-frequency gain
-UNITY_GAIN_CROSSING,144.54398,MHz,AC cursor; magnitude was +0.096279842 dB (96.279842 mdB)
-SR_RISE,69.7822,V_per_us,20-80% output transition interval; cursor deltaV=816.45185 mV; deltaT=11.7 ns
-SR_FALL,104.926,V_per_us,80-20% output transition interval; cursor deltaV=-816.32158 mV; deltaT=7.78 ns
+GAIN_10KHZ,30.37358,dB,AC cursor at 10 kHz
+BW_MINUS3DB_EST,4.4668359,MHz,cursor at 27.32431 dB; approximately 3.05 dB below low-frequency gain
+NEAR_UNITY_GAIN_POINT,144.54398,MHz,AC cursor; magnitude was +0.096279842 dB
+SR_RISE,69.8946,V_per_us,cursor deltaV=809.15652 mV; deltaT=11.576811 ns; average 20-80% slope
+SR_FALL,104.849,V_per_us,cursor deltaV=-814.77098 mV; deltaT=7.7708818 ns; average 80-20% slope
