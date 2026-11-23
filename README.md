@@ -1,122 +1,75 @@
-# CMOS Current Mirror Design
+# CMOS Analog Circuit Studies
 
-I built a basic NMOS current mirror in LTspice and used it to look at two questions:
+This is where I keep my LTspice work on a few CMOS analog circuits. I started with a basic current mirror, compared it with a cascode version, then moved on to a common-source amplifier and a two-stage CMOS op-amp.
 
-- How does the output current change when I sweep the output voltage?
-- What changes when channel-length modulation is enabled or disabled in the MOSFET model?
+For each circuit, I keep the schematic, simulation setup, measurements and notes. Some parts are more complete than others, so I have listed the main limitations instead of treating every result as a final design.
 
-This repository contains the LTspice schematics and netlists, model cards, selected simulation readings, calculations and a short report.
+## What is in the repository?
 
-## Phase 1 — Basic NMOS current mirror
-### Phase 1 source schematics
+| Part | Circuit | What I looked at |
+|---|---|---|
+| [Phase 1](Phase_1_Basic_Current_Mirror/README.md) | Basic NMOS current mirror | Channel-length modulation, current mismatch and output resistance |
+| [Phase 2](Phase_2_130nm_Current_Mirror_Comparison/README.md) | Basic and self-biased cascode current mirrors | Output-current variation and an output-resistance estimate |
+| [Phase 3](Phase_3_Common_Source_Amplifier/README.md) | NMOS common-source stage with PMOS active load | DC operating point, AC gain and transient response |
+| [Phase 4](Phase_4_Two_Stage_Operational_Amplifier/README.md) | Two-stage CMOS op-amp | DC operating point, loop gain, phase margin, bandwidth and slew-rate measurements |
 
-- [Current mirror with LAMBDA = 0 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda0.asc)
-- [Current mirror with LAMBDA = 0.02 (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_1_Basic_Current_Mirror/schematics/Basic_Current_Mirror_Lambda002.asc)
+## A few results
 
+These are the values I recorded from the LTspice runs. They are tied to the circuits and model files used here.
 
-### Circuit
+- **Phase 1:** with LAMBDA = 0.02, the output current was 101.5426 µA at VOUT = 1.8 V, compared with a 100 µA reference. The output-resistance estimate was about 510 kΩ.
+- **Phase 2:** over the 0.5–1.5 V measurement interval, the measured current variation was 7.03% for the basic mirror and 0.96% for the cascode mirror.
+- **Phase 3:** the common-source stage had about 30.37 dB gain at 10 kHz and a cursor-based −3 dB bandwidth estimate of about 4.47 MHz.
+- **Phase 4:** the two-stage op-amp had about 79.58 dB low-frequency return-ratio gain, 13.54 MHz cursor-based unity-gain bandwidth and 46.09° cursor-based phase margin.
 
-![Basic NMOS current mirror schematic](Phase_1_Basic_Current_Mirror/results/figures/basic_nmos_current_mirror_schematic.svg)
+The details and measurement conditions are in the README for each phase and in its `results/data/` folder.
 
-### Setup
+## How the project is organised
 
-| Parameter | Value |
-|---|---:|
-| Supply voltage | 1.8 V |
-| Reference current | 100 µA |
-| M1 and M2 width | 10 µm |
-| M1 and M2 length | 1 µm |
-| Threshold voltage (model) | 0.7 V |
-| KP (model) | 200 µA/V² |
-| LAMBDA | 0.02 V⁻¹ or 0 |
-| Output-voltage sweep | 0–1.8 V, 0.01 V step |
+Each phase has its own folder. The usual layout is:
 
-The two runs use the same circuit and bias conditions. The only model parameter changed between them is LAMBDA.
+- `schematics/` — LTspice schematic files (`.asc`).
+- `simulation/` — netlists, measurement directives and run notes.
+- `models/` — model cards or instructions for obtaining an external model.
+- `results/data/` — measured values and calculations.
+- `results/figures/` and `screenshots/` — plots and LTspice screenshots.
+- `analysis/` and `report/` — working notes and longer write-ups.
 
-### Results
+Not every phase uses every folder.
 
-- With LAMBDA = 0.02, the measured output current at VOUT = 1.8 V was 101.5426 µA. This is a +1.5426% difference from the 100 µA reference current.
-- With LAMBDA = 0, the measured current was approximately 100 µA at the three sampled saturation-region points: 0.5 V, 1.0 V and 1.8 V.
-- The output resistance estimated from the LAMBDA = 0.02 sweep was about 510 kΩ. This is close to the value calculated from the LTspice operating-point Gds reading.
+## Running the circuits
 
-### Selected LTspice readings
+I used LTspice 26.0.2 on macOS for the runs documented here.
 
-![Selected DC sweep readings](Phase_1_Basic_Current_Mirror/results/figures/current_mirror_cursor_comparison.svg)
+1. Clone or download this repository.
+2. Open the `.asc` file for the circuit you want to run.
+3. Follow the instructions in that phase's `simulation/README.md` or `models/README.md`.
+4. Keep the folder structure unchanged where the schematic uses a relative model path.
 
-These are selected cursor readings from the LTspice plots, not the full sweep data.
+The Phase 1 schematics include their own simple Level-1 models. Phases 2–4 refer to a generic 130-nm BSIM3 model named `cmos130.lib`. I have not included that file because I have not confirmed that it can be redistributed. You will need to obtain it from its original source before running those schematics.
 
-## Files
-
-- `Phase_1_Basic_Current_Mirror/schematics/` — the two LTspice `.asc` files used for the DC sweeps.
-- `Phase_1_Basic_Current_Mirror/models/` — the two Level-1 model cards.
-- `Phase_1_Basic_Current_Mirror/simulation/netlists/` — netlists for the operating-point and DC-sweep runs.
-- `Phase_1_Basic_Current_Mirror/results/data/` — cursor readings and operating-point values copied from LTspice.
-- `Phase_1_Basic_Current_Mirror/results/figures/` — comparison plot.
-- `Phase_1_Basic_Current_Mirror/analysis/` — calculations and notes.
-- `Phase_1_Basic_Current_Mirror/report/` — the Phase 1 report.
-
-The two `.asc` files in `Phase_1_Basic_Current_Mirror/schematics/` are the versions saved from the LTspice session. Each one runs a DC sweep with its own LAMBDA setting. The separate `.cir` files also include the operating-point runs.
-
-## Notes and limitations
-
-I used a simple Level-1 NMOS model with illustrative parameters. It is not a model for a specific foundry process. LTspice also warned that the chosen transistor dimensions were outside its recommended range for this model. The simulations converged, but the results should be treated as a study of the model's behaviour rather than predictions for a real chip.
-
-The values in the CSV files were read from selected LTspice cursor and operating-point screenshots. They are rounded to the precision shown by LTspice. The raw screenshots are not included because they show local computer paths and a username.
-
-To regenerate the comparison plot from the CSV file, install Matplotlib and run:
+To redraw the Phase 1 comparison plot from the saved cursor readings, install Matplotlib and run:
 
 ```bash
 python3 -m pip install matplotlib
 python3 scripts/plot_results.py
 ```
 
-The script plots the saved cursor readings. It does not run LTspice or recreate the full sweep.
+This script only plots the readings already saved in the CSV. It does not run LTspice or recreate the original sweep.
 
+## Things to keep in mind
 
-## Phase 2 — 130-nm current mirror comparison
-### Phase 2 source schematics
+- The Level-1 model in Phase 1 uses illustrative parameters. It is not tied to a fabrication process.
+- The 130-nm BSIM3 model used in Phases 2–4 is a generic model, not a foundry-qualified PDK.
+- LTspice reported BSIM3 version and PD/PS warnings for the generic model. I left the model unchanged.
+- Some results are taken from selected cursor readings or measurement logs rather than a complete exported dataset. The relevant notes say which ones.
+- The output-resistance values in Phase 2 are estimates from DC sweep endpoints, not small-signal values calculated from operating-point Gds.
+- The Phase 4 bias voltages still come from ideal voltage sources. A transistor-level bias generator has not been built yet.
+- These results are useful for comparing the circuits in the stated simulation setup. They are not predictions of fabricated-chip performance.
 
-- [Basic 130-nm current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/basic_current_mirror_130nm.asc)
-- [Cascode 130-nm current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/cascode_current_mirror_130nm.asc)
+## Files worth opening first
 
-The Phase 2 schematics reference the external `cmos130.lib` model. It is not included in this public repository because redistribution permission has not been confirmed. See the Phase 2 model notes for details.
-
-
-I then used a generic 130-nm BSIM3 model to compare a basic NMOS current mirror with a four-transistor self-biased cascode version. Both circuits use a 1.5 V supply and a 100 µA reference current.
-
-Over the 0.5–1.5 V measurement interval, the cascode circuit reduced the measured output-current variation from 7.03% to 0.96%. The interval output-resistance estimate changed from 142.17 kΩ to 1.041 MΩ. These resistance values are estimated from the DC sweep endpoints, not from a small-signal operating-point measurement.
-
-The Phase 2 schematics, measurement logs, calculations and model notes are in [Phase_2_130nm_Current_Mirror_Comparison](Phase_2_130nm_Current_Mirror_Comparison/README.md). The generic model file is not included because its redistribution terms have not been confirmed.
-
-
-## Phase 3 — Common-source amplifier
-### Phase 3 source files
-
-The LTspice source files are available individually:
-
-- [DC operating-point schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_op_130nm.asc)
-- [AC analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_ac_130nm.asc)
-- [Transient analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_transient_130nm.asc)
-
-To run them in LTspice, download or clone the repository and keep its folder structure. The schematics look for the model at `Phase_3_Common_Source_Amplifier/models/cmos130.lib` (relative to the `schematics/` folder). The model card is not included in this public repository because permission to redistribute it has not been confirmed.
-
-The model copy checked during preparation has SHA-256:
-
-`ac9aa8376dd3fb9cf7033e8791b9f76ae07bf2c809d2148e1a1662e5bb07b1c3`
-
-On macOS, verify a separately obtained copy with:
-
-```bash
-shasum -a 256 Phase_3_Common_Source_Amplifier/models/cmos130.lib
-```
-
-
-I built a common-source stage with a PMOS active load and checked its DC operating point, AC response and transient response in LTspice. The current measurements are 30.37 dB gain at 10 kHz, an approximate 4.47 MHz −3 dB bandwidth, a near-unity-gain point at 144.54 MHz, and cursor-based rising/falling slew rates of 69.89 V/µs and 104.85 V/µs.
-
-The schematics, measurements and model notes are in [Phase 3 — Common-Source Amplifier](Phase_3_Common_Source_Amplifier/README.md). The model file itself is not included because its redistribution terms have not been confirmed.
-
-## Phase 4 — Two-stage CMOS operational amplifier
-
-Phase 4 adds a two-stage CMOS op-amp with a Miller compensation network. The current candidate uses a 1.5 V supply, 1 pF load, 1 pF compensation capacitor and 10.5 kΩ series compensation resistor. The measured results and LTspice source files are in [Phase 4 — Two-Stage CMOS Operational Amplifier](Phase_4_Two_Stage_Operational_Amplifier/README.md).
-
-The current cursor-based measurements are approximately 79.58 dB low-frequency return-ratio gain, 13.54 MHz unity-gain bandwidth and 46.09° phase margin. The 500 mV-step average output slopes are 10.84 V/µs rising and 3.93 V/µs falling. The measured VDD-only quiescent core power is 27.34 µW; ideal bias-source power is not included. These results use a generic BSIM3 model and are documented with their measurement conditions and limitations in the Phase 4 folder.
+- [Phase 1 — basic current mirror](Phase_1_Basic_Current_Mirror/README.md)
+- [Phase 2 — current mirror comparison](Phase_2_130nm_Current_Mirror_Comparison/README.md)
+- [Phase 3 — common-source amplifier](Phase_3_Common_Source_Amplifier/README.md)
+- [Phase 4 — two-stage CMOS op-amp](Phase_4_Two_Stage_Operational_Amplifier/README.md)

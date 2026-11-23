@@ -1,6 +1,6 @@
-# Measurement notes
+# Phase 4 — Measurement notes
 
-The values below were read from the user's LTspice 26.0.2 screenshots and operating-point log on 22 November 2026. The model is the generic 130-nm BSIM3 model used in the earlier phases.
+I read these values from the LTspice 26.0.2 screenshots and operating-point log saved on 22 November 2026. The circuit uses the same generic 130-nm BSIM3 model as the earlier phases.
 
 ## Design conditions
 
@@ -22,26 +22,31 @@ The values below were read from the user's LTspice 26.0.2 screenshots and operat
 - I(VDD) = −18.2271 µA (supply-current magnitude = 18.2271 µA)
 - Core static power from VDD = 1.5 V × 18.2271 µA = 27.34065 µW
 
-The operating-point log reported that direct Newton iteration did not find the operating point, then Gmin stepping succeeded. The displayed operating point was obtained after that convergence method. The ideal VTAIL and VBN2 sources are external bias sources; their power is not included in the VDD-only core-power figure.
+The operating-point log showed that Direct Newton did not find the operating point at first. Gmin stepping then succeeded. The displayed operating point is the result after that convergence method.
+
+VTAIL and VBN2 are external ideal bias sources. Their power is not included in the VDD-only core-power figure.
 
 ## AC loop-gain measurement
 
-- AC analysis: 1 Hz to 1 GHz, 100 points/decade.
-- A test source VTEST was inserted in series with the feedback path, with 0 V DC and 1 V AC.
-- The plotted return-ratio expression was `-V(out)/V(nfb)`.
+- AC sweep: 1 Hz to 1 GHz, 100 points/decade.
+- Test source VTEST: 0 V DC and 1 V AC, inserted in series with the feedback path.
+- Return-ratio expression: `-V(out)/V(nfb)`.
 - At 1 Hz, the cursor read 79.578034 dB and −0.01564061° (the phase readout is in millidegrees in the LTspice cursor window).
 - Near the 0 dB crossing, the cursor read 13.543947 MHz, +0.060451523 dB and −133.91447°.
 - The corresponding approximate phase margin is 180° − 133.91447° = 46.08553°.
 
-The unity-gain frequency and phase margin are cursor-based values near the 0 dB crossing, not interpolated exact crossing values.
+The unity-gain frequency and phase margin are cursor readings close to the 0 dB crossing. They are not interpolated exact crossing values.
 
 ## Transient response
 
 The final transient source uses:
 
-`PULSE(0.25 0.75 1u 1n 1n 1u 2u)`
+```text
+PULSE(0.25 0.75 1u 1n 1n 1u 2u)
+.tran 0 10u 0 1n
+```
 
-with `.tran 0 10u 0 1n`. The input is plotted as `V(n003)` and the output as `V(out)`.
+The input is plotted as `V(n003)` and the output as `V(out)`.
 
 ### Rising transition, 500 mV input step
 
@@ -59,12 +64,25 @@ with `.tran 0 10u 0 1n`. The input is plotted as `V(n003)` and the output as `V(
 - ΔV = −299.96905 mV
 - 80–20% average output slope magnitude = 3.9267 V/µs
 
-### Step-amplitude check
+### Input step-amplitude check
 
-The measured 20–80% rising slopes were 8.42631 V/µs (200 mV step), 9.94791 V/µs (300 mV), 10.548 V/µs (400 mV) and 10.8436 V/µs (500 mV). The rising slope was still increasing with step amplitude, so 10.8436 V/µs is reported as the measured 500 mV-step average slope, not as a proven asymptotic maximum slew rate. The 200 mV and 500 mV falling measurements were 4.10908 V/µs and 3.9267 V/µs respectively.
+The measured 20–80% rising slopes were:
+
+| Input step | Rising slope |
+|---:|---:|
+| 200 mV | 8.42631 V/µs |
+| 300 mV | 9.94791 V/µs |
+| 400 mV | 10.548 V/µs |
+| 500 mV | 10.8436 V/µs |
+
+The rising slope was still increasing with the input step. I therefore report 10.8436 V/µs as the average slope measured for the 500 mV step, not as a proven asymptotic maximum slew rate.
+
+The falling measurements for 200 mV and 500 mV input steps were 4.10908 V/µs and 3.9267 V/µs respectively.
 
 All slew-rate values are average slopes over the selected 20–80% or 80–20% output transition interval, not instantaneous peak derivatives.
 
 ## Model and simulation limitations
 
-LTspice reported that the model specifies BSIM3 version 3.200 while LTspice supports version 3.3.0. It also reported PD = 0 and PS = 0 warnings. These warnings were not corrected by changing the model. The model is generic and not a foundry-qualified PDK; results should not be treated as silicon predictions.
+LTspice reported that the model specifies BSIM3 version 3.200 while LTspice supports version 3.3.0. It also reported PD = 0 and PS = 0 warnings. I did not change the model to remove these warnings.
+
+The model is generic and is not a foundry-qualified PDK. The measurements should not be treated as silicon predictions.

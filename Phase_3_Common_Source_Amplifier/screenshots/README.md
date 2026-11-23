@@ -1,5 +1,8 @@
-# Screenshots
+# Phase 3 screenshots
 
-`common_source_amplifier_schematic.png` is a screenshot captured directly from LTspice. No generated circuit drawing is used.
+- `common_source_amplifier_schematic.png` is a screenshot taken directly from LTspice.
+- `phase3_dc_operating_point.png` shows the DC operating-point log.
+- `phase3_ac_response.png` shows the gain and phase response.
+- `phase3_transient_response.png` shows the input pulse and inverted output waveform.
 
-The blue `.op`, `.ac` and older `.tran` directives in the screenshot are commented out. The active transient command is `.tran 0 2.5u 0 20p`. The separate ASC files in `../schematics/` are used for the DC, AC and transient runs.
+In the schematic screenshot, the blue `.op`, `.ac` and older `.tran` directives are commented out. The active transient command is `.tran 0 2.5u 0 20p`. The separate ASC files in `../schematics/` are used for the DC, AC and transient runs.

@@ -1,37 +1,26 @@
 # Phase 2 — 130-nm Current Mirror Comparison
 
-This phase compares a basic NMOS current mirror with a self-biased cascode current mirror in LTspice.
+In this part I compared a basic NMOS current mirror with a four-transistor self-biased cascode current mirror in LTspice. I wanted to see how much the cascode version reduces the change in output current as VOUT increases.
 
-Both circuits use the same generic 130-nm BSIM3 model, 1.5 V supply, 100 µA reference current and 10 µm / 1 µm MOSFET dimensions. The output voltage is swept from 0 V to 1.5 V in 5 mV steps. The measurements below cover 0.5 V to 1.5 V.
+## Circuit and simulation setup
 
-## LTspice source files
+Both circuits use the same generic 130-nm BSIM3 model, 1.5 V supply, 100 µA reference current and 10 µm / 1 µm NMOS dimensions. I swept the output voltage from 0 V to 1.5 V in 5 mV steps. The comparison below uses the 0.5–1.5 V interval.
 
-- [Basic current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/basic_current_mirror_130nm.asc)
-- [Self-biased cascode current mirror (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_2_130nm_Current_Mirror_Comparison/schematics/cascode_current_mirror_130nm.asc)
-
-Both schematics include `../models/cmos130.lib`. To run them, obtain the same generic 130-nm BSIM3 model separately and place it in `Phase_2_130nm_Current_Mirror_Comparison/models/`. The model is not included here because redistribution permission has not been confirmed.
-
-## Files
-
-- schematics/basic_current_mirror_130nm.asc — basic two-transistor current mirror.
-- schematics/cascode_current_mirror_130nm.asc — four-transistor self-biased cascode current mirror.
-- results/data/selected_dc_measurements.csv — the three voltage points read from the LTspice measurement logs.
-- results/data/derived_metrics.csv — calculations based on the LTspice MIN and MAX measurements over 0.5–1.5 V.
-- results/data/measurement_notes.md — measurement values, conditions and model warnings.
-- results/figures/selected_dc_points.svg — plot of the three measured points. It does not represent a full sweep export.
-- models/README.md — model file requirements and notes.
-- simulation/measurement_directives.md — the .meas directives used in the schematics.
-
-## Simulation setup
-
-| Parameter | Basic | Cascode |
+| Parameter | Basic mirror | Cascode mirror |
 |---|---:|---:|
 | Supply voltage | 1.5 V | 1.5 V |
 | Reference current | 100 µA | 100 µA |
 | NMOS dimensions | W = 10 µm, L = 1 µm | W = 10 µm, L = 1 µm (each device) |
 | Temperature | 27 °C | 27 °C |
 | Output-voltage sweep | 0–1.5 V, 5 mV step | 0–1.5 V, 5 mV step |
-| Device model | generic 130-nm BSIM3 | generic 130-nm BSIM3 |
+| Model | Generic 130-nm BSIM3 | Generic 130-nm BSIM3 |
+
+## LTspice files
+
+- [Basic current mirror](schematics/basic_current_mirror_130nm.asc)
+- [Self-biased cascode current mirror](schematics/cascode_current_mirror_130nm.asc)
+
+Both schematics refer to `../models/cmos130.lib`. The model file is not included because I have not confirmed its redistribution terms. See [models/README.md](models/README.md) before running the circuits.
 
 ## Results
 
@@ -44,18 +33,24 @@ Both schematics include `../models/cmos130.lib`. To run them, obtain the same ge
 | Maximum absolute current error in this interval | 7.4614% | 0.9218% |
 | Interval output-resistance estimate | 142.17 kΩ | 1.04145 MΩ |
 
-The measured current variation is 86.35% lower with the cascode circuit. The interval output-resistance estimate is 7.33 times the basic-circuit estimate (about a 632.5% increase).
+Over this measurement interval, the cascode circuit reduced the measured current variation by about 86.35%. The interval output-resistance estimate was about 7.33 times the basic mirror's estimate.
 
-## How the calculations were made
+I calculated current variation as `(Imax - Imin) / IREF`. The output-resistance estimate is `(1.5 V - 0.5 V) / (IOUT at 1.5 V - IOUT at 0.5 V)`.
 
-Current variation is calculated as (Imax - Imin) / IREF over the 0.5–1.5 V interval. Maximum absolute current error is calculated from the measured minimum and maximum currents relative to the 100 µA reference. The interval output resistance is estimated from (1.5 V - 0.5 V) / (IOUT at 1.5 V - IOUT at 0.5 V).
+These resistance values come from the DC sweep endpoints. They are not small-signal output resistance values calculated from operating-point Gds.
 
-The output-resistance values are interval estimates from the DC sweep. They are not small-signal output resistance values taken from an operating-point gds measurement.
+## Files and measurements
+
+- `results/data/selected_dc_measurements.csv` — three measured output-current points for each circuit.
+- `results/data/derived_metrics.csv` — calculations from the LTspice MIN and MAX measurements.
+- `results/data/measurement_notes.md` — values copied from the LTspice output logs and the conditions used.
+- `results/figures/selected_dc_points.svg` — plot of the selected points, not a full sweep export.
+- `simulation/measurement_directives.md` — the `.meas` commands used in the schematics.
 
 ## Notes and limitations
 
-The measurements were copied from LTspice 26.0.2 output logs. The schematics and measurement values are from the submitted LTspice files and screenshots; the simulations were not rerun in this build environment.
+The values were copied from LTspice 26.0.2 output logs. The schematics and readings are from the LTspice files and screenshots; I did not rerun the simulations in this build environment.
 
-LTspice reported that it supports BSIM3 version 3.3.0 while the supplied model specifies version 3.200. It also reported zero drain/source junction perimeters (PD and PS). The model file was not modified to suppress these warnings. The model is a generic technology model, not a foundry-qualified PDK. Results should be read as a comparison within this model and setup, not as silicon performance predictions.
+LTspice reported that it supports BSIM3 version 3.3.0 while the model specifies version 3.200. It also reported PD and PS warnings because those values are zero. I left the model unchanged.
 
-The model file is not included because its redistribution licence has not been confirmed. See models/README.md before running the schematics.
+The model is generic, not a foundry-qualified PDK. The results show how these two circuits compare with this model and setup; they should not be treated as predictions for silicon.

@@ -1,11 +1,9 @@
-# Next: Compliance-voltage and operating-point checks
+# Possible next checks
 
-Phase 2 has been added in [Phase_2_130nm_Current_Mirror_Comparison](../Phase_2_130nm_Current_Mirror_Comparison/README.md). It compares the basic mirror with a self-biased cascode mirror using a generic 130-nm BSIM3 model.
+I have since added the cascode comparison in [Phase 2](../Phase_2_130nm_Current_Mirror_Comparison/README.md). There are still a few useful checks that I have not finished:
 
-The next checks are:
+- Find the minimum output voltage at which the output current stays within 1% of the 100 µA reference.
+- Compare the transistor operating points of the basic and cascode mirrors at the same output voltage.
+- Estimate small-signal output resistance from the operating-point Gds values, rather than only from the DC sweep endpoints.
 
-- Find the minimum output voltage at which the output current remains within 1% of the 100 µA reference.
-- Compare transistor operating points at the same output voltage.
-- Estimate small-signal output resistance from the operating-point gds value.
-
-These checks have not been completed yet.
+These are follow-up tasks, not completed results.

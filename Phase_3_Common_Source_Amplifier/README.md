@@ -1,8 +1,10 @@
 # Phase 3 — Common-Source Amplifier
 
-This phase uses an NMOS common-source stage with a PMOS active load. I ran separate DC, AC and transient analyses in LTspice. It is a single-stage amplifier exercise, not a two-stage op-amp.
+After the current-mirror comparison, I built a common-source stage with an NMOS input transistor and a PMOS active load. I checked its DC operating point, AC response and transient response in LTspice.
 
-## Circuit
+This is a single-stage amplifier. It is separate from the two-stage op-amp in Phase 4.
+
+## Circuit and setup
 
 ![Common-source amplifier schematic](screenshots/common_source_amplifier_schematic.png)
 
@@ -13,7 +15,7 @@ This phase uses an NMOS common-source stage with a PMOS active load. I ran separ
 - NMOS input bias = 0.45 V for DC and AC analyses
 - Load capacitor, CL = 1 pF
 - Temperature = 27 °C
-- Device model: generic 130-nm BSIM3 (`nMOSFET` and `pMOSFET`)
+- Model: generic 130-nm BSIM3 (`nMOSFET` and `pMOSFET`)
 
 ## Results
 
@@ -28,51 +30,32 @@ This phase uses an NMOS common-source stage with a PMOS active load. I ran separ
 | Output rising slew rate | 69.8946 V/µs |
 | Output falling slew rate | 104.849 V/µs |
 
-The bandwidth estimate is based on a cursor reading at 4.4668359 MHz and 27.32431 dB, about 3.05 dB below the low-frequency gain. The near-unity-gain cursor reading was +0.0963 dB, so it is reported as a near-unity-gain point rather than an exact 0 dB crossing.
+The bandwidth estimate comes from a cursor reading at 4.4668359 MHz and 27.32431 dB, about 3.05 dB below the low-frequency gain. The near-unity-gain cursor reading was +0.0963 dB, so I have not called it an exact 0 dB crossing.
 
-The slew rates are average slopes measured between cursor points over the 20–80% and 80–20% portions of the output transition. They are not peak values of the numerical derivative.
+The slew rates are average slopes between cursor points over the 20–80% and 80–20% parts of the output transition. They are not peak values of the numerical derivative.
 
-## Simulation screenshots
+## LTspice files
 
-### DC operating point
+- [DC operating-point schematic](schematics/common_source_op_130nm.asc)
+- [AC analysis schematic](schematics/common_source_ac_130nm.asc)
+- [Transient analysis schematic](schematics/common_source_transient_130nm.asc)
 
-![DC operating-point results](screenshots/phase3_dc_operating_point.png)
+The three files use the same circuit topology and device dimensions. They have different input sources and active analysis directives. See [simulation/README.md](simulation/README.md) for run details.
 
-*LTspice operating-point log showing the output voltage and device currents.*
+Keep the folder structure and place a separately obtained `cmos130.lib` file in `models/`. The schematics refer to it using `../models/cmos130.lib`. I have not included the model because I have not confirmed its redistribution terms. See [models/README.md](models/README.md).
 
-### AC response
+## Screenshots and data
 
-![AC frequency response](screenshots/phase3_ac_response.png)
+- [DC operating point](screenshots/phase3_dc_operating_point.png)
+- [AC response](screenshots/phase3_ac_response.png)
+- [Transient response](screenshots/phase3_transient_response.png)
+- [Measured values](results/data/measurements.csv)
+- [Cursor readings and calculations](results/data/measurement_notes.md)
 
-*Gain and phase response across the simulated frequency range.*
+## Notes and limitations
 
-### Transient response
+The ASC files were split into separate DC, AC and transient setups from the submitted schematic. The topology, device dimensions, bias sources and load capacitor were kept the same. The split files were not run again in LTspice after they were prepared; the recorded values come from the LTspice sessions described in the measurement notes.
 
-![Transient response](screenshots/phase3_transient_response.png)
+LTspice reported a BSIM3 version warning (the model specifies 3.200) and PD = 0 / PS = 0 warnings. I left the model unchanged. It is a generic model, not a foundry-qualified PDK, so these results describe this simulation setup rather than a fabricated device.
 
-*Input pulse and corresponding inverted output waveform.*
-
-## Source files
-
-- [DC operating-point schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_op_130nm.asc)
-- [AC analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_ac_130nm.asc)
-- [Transient analysis schematic (.asc)](https://raw.githubusercontent.com/Marumo66/Current-Mirror-Design/main/Phase_3_Common_Source_Amplifier/schematics/common_source_transient_130nm.asc)
-
-To run a schematic, keep the repository folder structure and place the separately obtained `cmos130.lib` file in `models/`. The ASC files reference it using `../models/cmos130.lib`. The model is not included because redistribution permission has not been confirmed.
-
-## Files
-
-- `schematics/common_source_op_130nm.asc` — DC operating-point setup.
-- `schematics/common_source_ac_130nm.asc` — AC sweep setup.
-- `schematics/common_source_transient_130nm.asc` — pulse-response setup.
-- `results/data/measurements.csv` — measured values.
-- `results/data/measurement_notes.md` — cursor readings, calculations and limitations.
-- `screenshots/README.md` — screenshot notes.
-- `models/README.md` — notes about the external model file.
-- `simulation/README.md` — how to run the three analyses.
-
-## Notes
-
-The three analysis schematics were run in LTspice using the supplied generic model. LTspice reported that the model specifies BSIM3 version 3.200 while the simulator supports version 3.3.0. It also reported PD = 0 and PS = 0 warnings. The model was left unchanged.
-
-This is a generic model, not a foundry-qualified PDK. The results describe this simulation setup and should not be treated as predictions for silicon. No phase-margin value is reported: phase margin is a loop-stability metric and was not measured for this open-loop common-source stage.
+I did not report phase margin for this stage. It is an open-loop common-source amplifier, and phase margin was not measured here.
